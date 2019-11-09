@@ -1,0 +1,29 @@
+---
+ - hosts: all
+   become: yes
+  # sudo: yes
+   become_user: root
+   vars:
+           name: vijay
+   tasks:
+   - name: To Install Apache-Server
+     yum:
+       name: httpd
+       state: present
+       #     enabled: yes
+   - name: To Copy the Website
+     template:
+       src: /home/ansadm/apache-install/index.html.j2
+       dest: /var/www/html/index.html
+     notify:
+       - restart-apache
+   handlers:
+   - name: restart-apache
+     service: 
+       name: httpd 
+       state: restarted
+
+
+                    
+
+
